@@ -1,0 +1,18 @@
+# https://www.rabbitmq.com/kubernetes/operator/using-operator.html#configure
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq
+spec:
+  image: harbor.jiankangsn.com/library/rabbitmq-delayed:3.8.9-management
+  replicas: 3
+  service:
+    type: NodePort
+  persistence:
+    storageClassName: managed-nfs-storage
+    storage: 30Gi
+  rabbitmq:
+    additionalPlugins:
+      - rabbitmq_top
+      - rabbitmq_shovel
+      - rabbitmq_delayed_message_exchange
